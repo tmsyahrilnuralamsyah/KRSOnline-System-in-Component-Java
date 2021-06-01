@@ -1,0 +1,33 @@
+context Database::login(npm: String, pass: String):
+    pre: self.isAuthenticated = false
+    post:   if self.validation(npm, pass) = true
+            then self.isAuthenticated = true 
+
+context Database::validation(npm: String, pass: String): Boolean
+    pre: false
+    post:   if  Database::getAccounts()->forAll(npm2: String, pass2: String |
+                npm = npm2 and pass = pass2) 
+            then result = true
+            else result = false
+
+context Database::logout()
+    pre: self.isAuthenticated = true
+    post: self.isAuthenticated = false
+
+context Account::krsProvided()
+    pre: self.krs = null
+    post: self.krs = true
+    
+context Account::getIdentity()
+    pre: self.isAuthenticated = true
+    post:   if self.isValid = true 
+            then print("NPM")
+            else print("Login terlebih dahulu...")
+
+context KrsOnline::provided()
+    pre: self.isiKrs = false
+    post: self.isiKrs = true
+
+context KrsOnline::isiKrs(): Boolean
+    pre: true
+    post: result = self.isiKrs

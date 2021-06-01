@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import javax.xml.crypto.Data;
 
 /**
  * Implementasi KRS Online
@@ -16,17 +17,19 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        System.out.print("\nNPM\t\t: ");
-        String npm = input.nextLine();
-        System.out.print("Password\t: ");
-        String pass = input.nextLine();
+        KrsOnline krs = new KrsOnline();
+        Database db = new Database();
+        Account acc = new Account("1808107010066", "222000");
 
-        Account a = new Account(npm, pass);
-        a.login();
-        a.getIdentity();
-        a.krsProvided();
-        a.getIdentity();
-        // a.krsProvided();
-        a.logout();
+        krs.connectTo(db);
+        krs.loginKrs(acc);
+
+        acc.connectTo(krs);
+        acc.getIdentity();
+        acc.krsProvided();
+        acc.getIdentity();
+        acc.krsProvided();
+
+        krs.logoutKrs();
     }
 }

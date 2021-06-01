@@ -1,11 +1,19 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-
-public class Account implements Authenticate {
+public class Account {
     private KrsOnline krs;
     private String name, npm, pass;
-    private boolean isValid;
+    private boolean isAuthenticated;
+
+    public String getNpm() {
+        return this.npm;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getpass() {
+        return this.pass;
+    }
 
     /**
      * Inisialisasi npm dan password untuk login
@@ -16,7 +24,14 @@ public class Account implements Authenticate {
     public Account(String npm, String pass) {
         this.npm = npm;
         this.pass = pass;
-        this.isValid = false;
+        this.isAuthenticated = false;
+    }
+    
+    public Account(String npm, String pass, String name) {
+        this.npm = npm;
+        this.pass = pass;
+        this.name = name;
+        this.isAuthenticated = false;
     }
 
     /**
@@ -33,60 +48,11 @@ public class Account implements Authenticate {
     }
 
     /**
-     * Untuk melakukan login
-     * 
-     */
-    public void login() {
-        try {
-            if (this.isValid)
-                System.out.println("\nAnda sudah login..");
-            else if (this.validation()) {
-                System.out.println("\nLogin sukses...");
-                this.isValid = true;
-                this.krs = new KrsOnline();
-            } else
-                System.out.println("\nNPM atau password anda masukkan salah... ");
-        } catch (Exception e) {
-            System.out.println("\nDatabase tidak ditemukan...");
-        }
-    }
-
-    /**
-     * Validasi untuk mengecek apakah akun yang ingin login terdaftar di database
-     */
-    private boolean validation() throws Exception {
-        File file = new File("db/account.txt");
-        BufferedReader br = new BufferedReader(new FileReader(file));
-
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] identity = line.split(":");
-            if (identity[0].equals(this.npm) && identity[1].equals(this.pass)) {
-                this.name = identity[2];
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Untuk melakukan logout
-     */
-    public void logout() {
-        if (this.isValid) {
-            this.krs = null;
-            System.out.println("\nLogout sukses...");
-        } else
-            System.out.println("\nAnda gagal logout...");
-        this.isValid = false;
-    }
-
-    /**
      * Menampilkan identitas pengguna yang telah login
      */
     public void getIdentity() {
-        if (this.isValid) {
-            System.out.println("\nNama\t: " + this.name);
+        if (this.isAuthenticated) {
+            // System.out.println("\nNama\t: " + this.name);
             System.out.println("NPM\t: " + this.npm);
             if (this.krs.isiKrs()) {
                 System.out.println("Anda Sudah Mengisi KRS");
@@ -97,5 +63,17 @@ public class Account implements Authenticate {
             }
         } else
             System.out.println("\nLogin terlebih dahulu...");
+    }
+
+    public void setAuthenticated() {
+        this.isAuthenticated = true;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void connectTo(KrsOnline krs) {
+        this.krs = krs;
     }
 }
