@@ -11,6 +11,9 @@ mahasiswa mengecek kembali krs yang telah diisi dan difinalisasi oleh dosen wali
 ### Component Diagram
 ![Picture1](https://user-images.githubusercontent.com/60872081/112935896-e6c3cb80-914e-11eb-8d65-2cd90468588c.jpg)
 
+### Sequnce Diagram 
+![Habis gelap terbitlah](https://user-images.githubusercontent.com/60872081/120971342-b9228080-c796-11eb-931b-d571d9954a86.png)
+
 Anggota Kelompok :
 - 1808107010032 T.M. Syahril Nur Alamsyah
 - 1808107010044 Farhan Karomi
