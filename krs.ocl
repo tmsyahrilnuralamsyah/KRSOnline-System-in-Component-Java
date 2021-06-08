@@ -1,4 +1,4 @@
-context Database::login(npm: String, pass: String):
+context Database::login(npm: String, pass: String)
     pre: self.isAuthenticated = false
     post:   if self.validation(npm, pass) = true
             then self.isAuthenticated = true 
